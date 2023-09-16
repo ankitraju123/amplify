@@ -19,7 +19,7 @@ import limesh from '../images/limeshpic.jpeg'
 import limeshmark from '../images/limeshmark.jpeg'
 
 import Text from 'react'
-// import Video from "./api/video"
+
 
 import Head from "next/head";
 
@@ -32,7 +32,7 @@ export default function Home({ formattedDate }) {
         <meta property="og:image:width" content="1200" /> {/* Replace with the width of your image */}
         <meta property="og:image:height" content="630" />
         <meta/>
-       {/* Google Tag Manager */}
+      
      
 
 
