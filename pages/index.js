@@ -2,7 +2,7 @@ export default function Home({ formattedDate }) {
   return (
     <>
       <h1>Static page</h1>
-      <p>This page is static. It was built on {formattedDate}.</p>
+      <p>This page is static. It was bui mother fuck</p>
       <p>
         <a href="/ssr">View a server-side rendered page.</a>
       </p>
