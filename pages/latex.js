@@ -3,9 +3,9 @@ import { MathJaxContext, MathJax, MathJaxText } from 'better-react-mathjax';
 import AWS from 'aws-sdk';
 
 AWS.config.update({
-  accessKeyId: 'YOUR_ACCESS_KEY_ID',
-  secretAccessKey: 'YOUR_SECRET_ACCESS_KEY',
-  region: 'ap-south-1',
+    accessKeyId: 'AKIAW6NHOSIAG7OBVW5E',
+    secretAccessKey: 'CpadDtG3Shsl0RyNt1ov1qSY42kRuKT9nwcCfK4I',
+    region: 'ap-south-1',
 });
 
 const s3 = new AWS.S3();
