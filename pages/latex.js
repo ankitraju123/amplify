@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MathJaxContext, MathJax, MathJaxText } from 'better-react-mathjax';
 import AWS from 'aws-sdk';
+import fetchHtmlFromS3 from './s3util';
 
 // AWS credentials configuration
 AWS.config.update({
@@ -11,6 +12,7 @@ AWS.config.update({
 
 // Create an S3 instance after configuring AWS credentials
 const s3 = new AWS.S3();
+
 
 const LatexPage = () => {
   const [htmlContent, setHtmlContent] = useState('');
