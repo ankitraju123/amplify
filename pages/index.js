@@ -182,18 +182,14 @@ export default function Home({ formattedDate }) {
             />
           </div>
           <br/>
-          <div className="w-2/4 mx-auto p-3 font-bold ">
+          {/* <div className="w-2/4 mx-auto p-3 font-bold ">
           <div className='container_video mx-auto text-center p-10 border-solid border-2 border-black ... rounded-lg' dangerouslySetInnerHTML={{ __html: `
-    <p className="font-bold text-black">Toshita Gabhane</p>
-    <br/>
-    <script src="https://fast.wistia.com/embed/medias/c021olhfrp.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_c021olhfrp seo=true videoFoam=true" style="height:100%;position:relative;width:100%"><div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;"><img src="https://fast.wistia.com/embed/medias/c021olhfrp/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" aria-hidden="true" onload="this.parentNode.style.opacity=1;" /></div></div></div></div>
-    ` }} />
-          {/* <div className='container_video mx-auto text-center  rounded-lg' dangerouslySetInnerHTML={{ __html: `
-    <p className="font-bold text-black">Limesh Chakole</p>
-    <br/>
-    <script src="https://fast.wistia.com/embed/medias/c021olhfrp.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_c021olhfrp seo=true videoFoam=true" style="height:100%;position:relative;width:100%"><div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;"><img src="https://fast.wistia.com/embed/medias/c021olhfrp/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" aria-hidden="true" onload="this.parentNode.style.opacity=1;" /></div></div></div></div>
-    ` }} /> */}
-          </div>
+    // <p className="font-bold text-black">Toshita Gabhane</p>
+    // <br/>
+    // <script src="https://fast.wistia.com/embed/medias/c021olhfrp.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_c021olhfrp seo=true videoFoam=true" style="height:100%;position:relative;width:100%"><div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;"><img src="https://fast.wistia.com/embed/medias/c021olhfrp/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" aria-hidden="true" onload="this.parentNode.style.opacity=1;" /></div></div></div></div>
+    // ` }} />
+       
+          </div> */}
           <br/>
           <div className="text-container">
           <p className="text-2xl text-black">
