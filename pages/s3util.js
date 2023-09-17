@@ -1,12 +1,8 @@
 import AWS from 'aws-sdk';
 
-AWS.config.update({
- accessKeyId: 'AKIAW6NHOSIAG7OBVW5E',
-  secretAccessKey: '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',
-  region: 'ap-south-1',
-});
 
-const s3 = new AWS.S3();
+
+
 
  const fetchHtmlFromS3 = async (bucketName, key) => {
   const params = {
