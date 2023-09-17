@@ -4,6 +4,12 @@ import { MathJaxContext, MathJax, MathJaxText } from 'better-react-mathjax';
 import AWS from 'aws-sdk';
 const s3 = new AWS.S3();
 
+AWS.config.update({
+    accessKeyId: 'AKIAW6NHOSIAG7OBVW5E',
+     secretAccessKey: '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',
+     region: 'ap-south-1',
+   });
+
 const LatexPage = () => {
   const [htmlContent, setHtmlContent] = useState('');
   const [subtopics, setSubtopics] = useState([]);
