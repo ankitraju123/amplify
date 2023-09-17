@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { MathJaxContext, MathJax, MathJaxText } from 'better-react-mathjax';
 import AWS from 'aws-sdk';
 
 AWS.config.update({
-    accessKeyId: 'AKIAW6NHOSIAG7OBVW5E',
-    secretAccessKey: 'CpadDtG3Shsl0RyNt1ov1qSY42kRuKT9nwcCfK4I',
-    region: 'ap-south-1',
+  accessKeyId: 'YOUR_ACCESS_KEY_ID',
+  secretAccessKey: 'YOUR_SECRET_ACCESS_KEY',
+  region: 'ap-south-1',
 });
 
 const s3 = new AWS.S3();
@@ -17,8 +17,38 @@ const LatexPage = () => {
   const [selectedSubtopic, setSelectedSubtopic] = useState('');
   const [selectedQuestionNo, setSelectedQuestionNo] = useState('');
 
-  // Reference to store the MathJax context
-  const mathJaxContextRef = React.createRef();
+  // Function to fetch HTML content from S3
+  const fetchHtmlContent = async (bucketName, key) => {
+    const params = {
+      Bucket: bucketName,
+      Key: key,
+    };
+
+    try {
+      const response = await s3.getObject(params).promise();
+      return response.Body.toString('utf-8');
+    } catch (error) {
+      console.error('Error fetching HTML from S3:', error);
+      return null;
+    }
+  };
+
+  // Callback to handle fetching and rendering HTML content
+  const handleFetchHtmlContent = useCallback(async () => {
+    if (!selectedSubtopic || !selectedQuestionNo) {
+      return;
+    }
+
+    const key = `${selectedSubtopic}/question${selectedQuestionNo}.html`;
+    const content = await fetchHtmlContent('milind1234', key);
+    if (content) {
+      setHtmlContent(content);
+      // Reload MathJax to render LaTeX in the new content
+      if (window.MathJax) {
+        window.MathJax.Hub.Queue(['Typeset', window.MathJax.Hub]);
+      }
+    }
+  }, [selectedSubtopic, selectedQuestionNo]);
 
   useEffect(() => {
     // Fetch initial units, subtopics, and questionNos from your API or data source
@@ -31,45 +61,8 @@ const LatexPage = () => {
     });
   }, []);
 
-  // Function to fetch question numbers based on selected subtopic
-  const getQuestionOptions = () => {
-    return questionNos[selectedSubtopic] || [];
-  };
-
-  const fetchHtmlContent = async () => {
-    try {
-      // Fetch HTML content from your source (e.g., S3 bucket)
-      const key = `${selectedSubtopic}/question${selectedQuestionNo}.html`;
-      const params = {
-        Bucket: 'milind1234',
-        Key: key,
-      };
-
-      const response = await s3.getObject(params).promise();
-      const content = response.Body.toString();
-      setHtmlContent(content);
-
-      // Manually trigger MathJax to re-render the content
-      if (mathJaxContextRef.current) {
-        mathJaxContextRef.current.TextRendered();
-      }
-    } catch (error) {
-      console.error('Error fetching HTML:', error);
-    }
-  };
-
-  const renderHtmlWithLatex = (htmlContent) => {
-    // Parse the HTML content and replace LaTeX expressions with MathJax components
-    const latexRegex = /\$(.*?)\$/g;
-    const replacedHtml = htmlContent.replace(latexRegex, (match, latexExpression) => {
-      return `<MathJaxText text="${latexExpression}" />`;
-    });
-
-    return replacedHtml;
-  };
-
   // Ensure that question options are updated when the selected subtopic changes
-  const questionOptions = getQuestionOptions();
+  const questionOptions = questionNos[selectedSubtopic] || [];
 
   return (
     <div className='container-latex'>
@@ -102,7 +95,7 @@ const LatexPage = () => {
         </select>
         <button
           className='w-full sm:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'
-          onClick={fetchHtmlContent}
+          onClick={handleFetchHtmlContent}
         >
           View Solution
         </button>
@@ -112,9 +105,9 @@ const LatexPage = () => {
       <br />
       <br />
       {htmlContent && (
-        <MathJaxContext ref={mathJaxContextRef}>
+        <MathJaxContext>
           <MathJax>
-            <div dangerouslySetInnerHTML={{ __html: renderHtmlWithLatex(htmlContent) }} />
+            <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
           </MathJax>
         </MathJaxContext>
       )}
