@@ -10,6 +10,22 @@ AWS.config.update({
 });
 
 // Create an S3 instance after configuring AWS credentials
+
+ const fetchHtmlFromS3 = async (bucketName, key) => {
+      const params = {
+        Bucket: bucketName,
+        Key: key,
+      };
+    
+      try {
+        const response = await s3.getObject(params).promise();
+        return response.Body.toString('utf-8'); // Return the content of the HTML file
+      } catch (error) {
+        console.error('Error fetching HTML from S3:', error);
+        return null;
+      }
+    };
+    
 const s3 = new AWS.S3();
 
 const LatexPage = () => {
