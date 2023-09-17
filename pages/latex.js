@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MathJaxContext, MathJax, MathJaxText } from 'better-react-mathjax';
 import AWS from 'aws-sdk';
+import fetchHtmlFromS3 from './s3util';
 
 // AWS credentials configuration
 
