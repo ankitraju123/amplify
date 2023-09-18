@@ -41,6 +41,8 @@ export default function Home({ formattedDate }) {
   return (
     <>
      <div className=" bg-white ">
+      <Link href='./latex'>  <div className="solution_link">Get All Solutions for free! Click here</div></Link>
+    
         <div className="bg-black  ">
           <br />
           <br />
