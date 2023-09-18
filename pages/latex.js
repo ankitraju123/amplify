@@ -104,7 +104,7 @@ const LatexPage = () => {
       <br />
       <br />
       <br />
-      <div className='latex p-4'>
+      <div className='latex p-4' style={{ zIndex: 0 }}>
       {htmlContent && (
         <MathJaxContext>
           <MathJax key={mathJaxKey}>
