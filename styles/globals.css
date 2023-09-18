@@ -873,7 +873,7 @@ img {
     padding: 10px; /* Add padding as needed */
     background-color: black; /* Set a background color */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a shadow for elevation */
-    color: white;
+    /* color: white; */
   }
 
   .select-box {
