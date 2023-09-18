@@ -104,6 +104,7 @@ const LatexPage = () => {
       <br />
       <br />
       <br />
+      <div>
       {htmlContent && (
         <MathJaxContext>
           <MathJax key={mathJaxKey}>
@@ -111,6 +112,8 @@ const LatexPage = () => {
           </MathJax>
         </MathJaxContext>
       )}
+      </div>
+      
     </div>
   );
 };
