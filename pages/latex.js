@@ -108,7 +108,7 @@ const LatexPage = () => {
       {htmlContent && (
         <MathJaxContext>
           <MathJax key={mathJaxKey}>
-            <div dangerouslySetInnerHTML={{ __html: renderHtmlWithLatex(htmlContent) }} />
+            <div style={{ zIndex: 0 }} dangerouslySetInnerHTML={{ __html: renderHtmlWithLatex(htmlContent) }} />
           </MathJax>
         </MathJaxContext>
       )}
