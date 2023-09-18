@@ -845,17 +845,54 @@ img {
       )
       rgb(var(--background-start-rgb));
   }
-  .container-solution{
+  
+ 
+  .container-solution {
     position: fixed;
-    
-    left: 50%;
-    transform: translate(-50%, 50%);
-  
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: top; /* Align items to the top vertically */
+    padding: 10px; /* Add padding as needed */
+    background-color: #fff; /* Set a background color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a shadow for elevation */
   }
-  
+
+  .select-box {
+    margin: 5px; /* Add margin for spacing */
+    padding: 5px; /* Add padding to the select boxes */
+    font-size: 16px; /* Set the font size */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 4px; /* Add border radius */
+  }
+
+  .view-button {
+    margin: 5px; /* Add margin for spacing */
+    padding: 10px 20px; /* Add padding to the button */
+    font-size: 16px; /* Set the font size */
+    background-color: #007bff; /* Button background color */
+    color: #fff; /* Button text color */
+    border: none; /* Remove button border */
+    border-radius: 4px; /* Add border radius */
+    cursor: pointer; /* Add pointer cursor */
+  }
+
   .container-latex{
-   
-    padding-right: 20px;
-    padding-bottom: 20px;
-    padding-left: 20px;
+    background-color: white;
+  }
+
+  @media screen and (max-width: 768px) {
+    .container-solution {
+      flex-direction: column; /* Change to column layout for mobile */
+    }
+
+    .select-box {
+      width: 70%; /* Remove full width for select boxes on mobile */
+    }
+
+    .responsive_select{
+      display: flex;
+    }
   }

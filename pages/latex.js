@@ -67,9 +67,10 @@ const LatexPage = () => {
 
   return (
     <div className='container-latex'>
-      <div className='container-solution mx-auto flex flex-col sm:flex-row items-center justify-center gap-5'>
+      <div className='container-solution '>
+        <div className='responsive_select'>
         <select
-          className='w-full sm:w-1/3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3 sm:mb-0'
+          className='select-box'
           value={selectedSubtopic}
           onChange={e => setSelectedSubtopic(e.target.value)}
           style={{ color: 'black' }}
@@ -80,7 +81,7 @@ const LatexPage = () => {
           ))}
         </select>
         <select
-          className='w-full sm:w-1/3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3 sm:mb-0'
+          className='select-box'
           value={selectedQuestionNo}
           onChange={e => setSelectedQuestionNo(e.target.value)}
           style={{ color: 'black' }}
@@ -90,8 +91,10 @@ const LatexPage = () => {
             <option key={questionNo} value={questionNo}>{questionNo}</option>
           ))}
         </select>
+        </div>
+      
         <button
-          className='w-full sm:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'
+          className='view-button'
           onClick={fetchHtmlContent}
         >
           View Solution
