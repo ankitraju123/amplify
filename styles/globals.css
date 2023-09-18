@@ -871,8 +871,9 @@ img {
     justify-content: center; /* Center horizontally */
     align-items: top; /* Align items to the top vertically */
     padding: 10px; /* Add padding as needed */
-    background-color: #fff; /* Set a background color */
+    background-color: black; /* Set a background color */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a shadow for elevation */
+    color: white;
   }
 
   .select-box {
