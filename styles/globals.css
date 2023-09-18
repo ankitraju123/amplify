@@ -891,7 +891,9 @@ img {
     .select-box {
       width: 70%; /* Remove full width for select boxes on mobile */
     }
-
+.latex{
+  margin-top: 50px;
+}
     .responsive_select{
       display: flex;
     }
