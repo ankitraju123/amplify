@@ -21,14 +21,30 @@ const LatexPage = () => {
   useEffect(() => {
     // Fetch initial units, subtopics, and questionNos from your API or data source
     // For example, you can populate them with dummy data here
-    setSubtopics(['Rotational Dynamics', 'Force']);
+    setSubtopics(['Rotational Dynamics','Mechanical Properties of Fluid','Kinetic theory of gases and radiation','Thermodynamics','Oscillations','Superpostion of waves','Wave Optics','Electrostatics','Current Electricity','Magnetic Effect of Electric current','Magnetic Materials','Electromagnetic Induction','AC Circuits','Dual Nature of radiation and matter','Structure of Atoms and Nuclie','Semiconductor']);
     setQuestionNos({
-      'Rotational Dynamics': [1, 2, 3, 4, 5, 6],
-      'Force': [1, 2, 3, 4],
+      'Rotational Dynamics': [12, 13, 14, 15, 16, 17,18,19,20,21,22,23],
+      'Mechanical Properties of Fluid': [10,11,12, 13, 14, 15, 16, 17,18,19,20,21,22,23],
+      'Kinetic theory of gases and radiation':[11,12, 13, 15, 16, 17,18,19,20,21,22,23,24,25],
+      'Thermodynamics':[4,5,6,7,8,9,10,12],
+      'Oscillations':[8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24],
+      'Superpostion of waves':[10,11,12, 13, 14, 15, 16, 17,18,19,20,21,22,23],
+   'Wave Optics':[13, 15, 16, 17,18,19,20,21,22,23,24,25],
+   'Electrostatics':[8,9,10,11,12,13],
+   'Current Electricity':[10,11,12, 13, 14, 15, 16, 17,18,19,20],
+   'Magnetic Effect of Electric current':[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
+   'Magnetic Materials':[3,4,5,6,7,8,9,10,11],
+   'Electromagnetic Induction':[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],
+   'AC Circuits':[12, 13, 15, 16, 17,18,19,20,21,22,23],
+   'Dual Nature of radiation and matter':[7,8,9,10,11,12,13,14,15,16,17,18],
+   'Structure of Atoms and Nuclie':[10,11,12, 13, 14, 15, 16, 17,18,19,20,21,22,23,24],
+   'Semiconductor':[18,19,20]
+
+      
     });
   }, []);
 
-  // Function to fetch question numbers based on selected subtopic
+  
   const getQuestionOptions = () => {
     return questionNos[selectedSubtopic] || [];
   };
@@ -101,14 +117,13 @@ const LatexPage = () => {
         </button>
       </div>
 
-      <br />
-      <br />
-      <br />
-      <div className='latex p-4' style={{ zIndex: 0 }}>
+    
+     
+      <div className='latex p-4 ' style={{ zIndex: 0, color:"black" }}>
       {htmlContent && (
         <MathJaxContext>
           <MathJax key={mathJaxKey}>
-            <div style={{ zIndex: 0 }} dangerouslySetInnerHTML={{ __html: renderHtmlWithLatex(htmlContent) }} />
+            <div className='main_latex' style={{ zIndex: 0 ,color:"black"}} dangerouslySetInnerHTML={{ __html: renderHtmlWithLatex(htmlContent) }} />
           </MathJax>
         </MathJaxContext>
       )}
