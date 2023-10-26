@@ -54,6 +54,7 @@ const RenderedPage = () => {
     return replacedHtml;
   };
 
+
   return (
     <div className='latex p-4 ' style={{ zIndex: 0, color:"black" }}>
     {htmlContent && (
