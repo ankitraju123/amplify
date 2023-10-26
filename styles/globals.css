@@ -821,45 +821,7 @@ img {
   
   
   
-  /* Style for demonstration purposes */
-  ol{
-    text-align: center;
-  }
-  li{
-    text-align: left;
-    font-size: 40px;
-    color: rgb(18, 75, 18);
-    
-  }
-  
-  
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-  
-  :root {
-    --foreground-rgb: 0, 0, 0;
-    --background-start-rgb: 214, 219, 220;
-    --background-end-rgb: 255, 255, 255;
-  }
-  
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --foreground-rgb: 255, 255, 255;
-      --background-start-rgb: 0, 0, 0;
-      --background-end-rgb: 0, 0, 0;
-    }
-  }
-  
-  body {
-    color: rgb(var(--foreground-rgb));
-    background: linear-gradient(
-        to bottom,
-        transparent,
-        rgb(var(--background-end-rgb))
-      )
-      rgb(var(--background-start-rgb));
-  }
+
   
  
   .container-solution {
@@ -887,12 +849,22 @@ img {
   .view-button {
     margin: 5px; /* Add margin for spacing */
     padding: 10px 20px; /* Add padding to the button */
-    font-size: 16px; /* Set the font size */
-    background-color: #007bff; /* Button background color */
+    font-size: 26px; /* Set the font size */
+    background-color: rgb(43, 140, 99); /* Button background color */
     color: #fff; /* Button text color */
     border: none; /* Remove button border */
-    border-radius: 4px; /* Add border radius */
+    border-radius: 10px; /* Add border radius */
     cursor: pointer; /* Add pointer cursor */
+    width: 250px;
+    height: 60px;
+    
+
+  }
+  .button-container{
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .container-latex{
@@ -915,3 +887,108 @@ img {
       display: flex;
     }
   }
+
+
+
+.select-tag-1{
+  justify-content: center;
+  align-items: center;
+  /* background-color: #007bff; */
+  display: flex;
+  gap: 70px;
+}
+
+.select-tag-1>select{
+  background-color: #007bff;
+  border-radius: 15px;
+padding: 20px;
+font-size:larger;
+text-align: center;
+width: 220px;
+}
+
+.paper-list{
+  border: 1px solid black;
+  margin: auto;
+  width:500px;
+  background-color: rgb(238, 230, 230);
+  border-radius: 10px;
+}
+
+ul.a{
+  list-style-type: circle;
+  list-style-position: inside;
+  padding-left: 10px;
+}
+
+.footer{
+  /* justify-content: space-between; */
+  background-color: black;
+  color: white;
+  height: 40px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+
+@media screen and (max-width: 768px) {
+   
+ .footer{
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  height: 120px;
+ }
+}
+
+ /* styles.css */
+
+/* Define responsive styles for different screen sizes */
+/* For screens smaller than 640px (e.g., mobile phones) */
+@media (max-width: 640px) {
+  .select-box {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+/* For screens between 641px and 1024px (e.g., tablets) */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .select-box {
+    width: 48%; /* Adjust as needed */
+    margin-right: 2%; /* Add spacing between elements */
+  }
+  .footer {
+    font-size: 14px; /* Adjust font size for the footer links */
+  }
+}
+
+/* For screens larger than 1024px (e.g., desktops) */
+@media (min-width: 1025px) {
+  .select-box {
+    width: 24%; /* Adjust as needed */
+    margin-right: 2%; /* Add spacing between elements */
+  }
+}
+
+
+.select-tag-grid {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.select-tag-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.select-box {
+  width: 100%;
+  padding: 5px;
+}
+
+option{
+  background-color: white;
+}
