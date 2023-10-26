@@ -185,7 +185,7 @@ const LatexPage = () => {
         <br/>
         <div className='button-container'>
           <button className='view-button' onClick={handleViewQuestionPapers}>
-            Find Papers
+            Find Papers solution
           </button>
         </div>
         <button>
