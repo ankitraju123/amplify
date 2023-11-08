@@ -910,12 +910,12 @@ width: 220px;
 .paper-list{
   border: 1px solid black;
   margin: auto;
-  width:500px;
+  width:50%;
   background-color: rgb(238, 230, 230);
   border-radius: 10px;
 }
 
-ul.a{
+ul{
   list-style-type: circle;
   list-style-position: inside;
   padding-left: 10px;
