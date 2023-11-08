@@ -15,88 +15,135 @@ const s3 = new AWS.S3();
 
 
 const LatexPage = () => {
+  <Head>
+    <meta name="google-site-verification" content="FxqR1s2icYY6kU-AX-P380Ww8gSBV3XDqfTmpumkPAI" />
+  </Head>
+  const [selectedUniversity, setSelectedUniversity] = useState('');
+  const [selectedBranch, setSelectedBranch] = useState('');
+  const [selectedSemester, setSelectedSemester] = useState('');
+  const [selectedSubject, setSelectedSubject] = useState('');
+  const [htmlFileList, setHtmlFileList] = useState([]);
+
+  const [universities, setUniversities] = useState([]);
+  const [branches, setBranches] = useState([]);
+  const [semesters, setSemesters] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+
   const router = useRouter();
-  const { university, semester, branch, subject } = router.query;
 
-  const [htmlContent, setHtmlContent] = useState('');
-  const [selectedPaper, setSelectedPaper] = useState('');
-  const [showPaperList, setShowPaperList] = useState(false);
-  const [selectedList, setSelectedList] = useState([]);
-
-  const universities = ['Nagpur', 'Pune', 'Mumbai'];
-  const semesters = {
-    Nagpur: ['1st', '2nd', '3rd', '4th', '5th'],
-    Pune: ['1st', '2nd', '3rd', '4th', '5th'],
-    Mumbai: ['1st', '2nd', '3rd', '4th', '5th'],
-  };
-  const branches = {
-    Nagpur: ['Mechanical', 'Civil'],
-  };
-
-  const subjects = {
-    Nagpur: {
-      '1st': {
-        Mechanical: ['Subject1', 'Subject2', 'Subject3'],
-      },
-      '2nd': {
-        Civil: ['Subject4', 'Subject5', 'Subject6'],
-      },
-      // Define subjects for other semesters
-    },
-    Pune: {
-      // Define subjects for Pune
-    },
-    Mumbai: {
-      // Define subjects for Mumbai
-    },
-  };
-
-  const lists = {
-    Nagpur: {
-      '1st': {
-        'Mechanical': {
-          'Subject1': ['question', 'winter-2019'],
-          'Subject2': [],
-          'Subject3': [],
-        },
-        // Define papers for other subjects and semesters
-      },
-    },
-    Pune: {
-      // Define papers for Pune
-    },
-    Mumbai: {
-      // Define papers for Mumbai
-    },
-  };
-
-  const fetchHtmlContent = async (paperName) => {
-    try {
-      if (paperName) {
-        const key = `universities/${university}/${semester}/${branch}/${subject}/${paperName}.html`;
+  useEffect(() => {
+    // Fetch the universities
+    async function fetchUniversities() {
+      try {
         const params = {
-          Bucket: 'demonext', // Replace with your S3 bucket name
-          Key: key,
+          Bucket: 'demonext',
+          Delimiter: '/',
+          Prefix: 'universities/',
         };
-
-        const response = await s3.getObject(params).promise();
-        const content = response.Body.toString();
-        setHtmlContent(content);
-      } else {
-        // Handle the case where no paper is selected
+        const data = await s3.listObjectsV2(params).promise();
+        const universityNames = data.CommonPrefixes.map(prefix => prefix.Prefix.split('/')[1]);
+        setUniversities(universityNames);
+      } catch (error) {
+        console.error('Error fetching universities from S3', error);
       }
+    }
+
+    fetchUniversities();
+  }, []);
+
+  useEffect(() => {
+    if (selectedUniversity) {
+      // Fetch the branches based on the selected university
+      async function fetchBranches() {
+        try {
+          const params = {
+            Bucket: 'demonext',
+            Delimiter: '/',
+            Prefix: `universities/${selectedUniversity}/`,
+          };
+          const data = await s3.listObjectsV2(params).promise();
+          const branchNames = data.CommonPrefixes.map(prefix => prefix.Prefix.split('/')[2]);
+          setBranches(branchNames);
+        } catch (error) {
+          console.error('Error fetching branches from S3', error);
+        }
+      }
+
+      fetchBranches();
+    }
+  }, [selectedUniversity]);
+
+  useEffect(() => {
+    if (selectedBranch) {
+      // Fetch the semesters based on the selected branch
+      async function fetchSemesters() {
+        try {
+          const params = {
+            Bucket: 'demonext',
+            Delimiter: '/',
+            Prefix: `universities/${selectedUniversity}/${selectedBranch}/`,
+          };
+          const data = await s3.listObjectsV2(params).promise();
+          const semesterNames = data.CommonPrefixes.map(prefix => prefix.Prefix.split('/')[3]);
+          setSemesters(semesterNames);
+        } catch (error) {
+          console.error('Error fetching semesters from S3', error);
+        }
+      }
+
+      fetchSemesters();
+    }
+  }, [selectedUniversity, selectedBranch]);
+
+  useEffect(() => {
+    if (selectedSemester) {
+      // Fetch the subjects based on the selected semester
+      async function fetchSubjects() {
+        try {
+          const params = {
+            Bucket: 'demonext',
+            Delimiter: '/',
+            Prefix: `universities/${selectedUniversity}/${selectedBranch}/${selectedSemester}/`,
+          };
+          const data = await s3.listObjectsV2(params).promise();
+          const subjectNames = data.CommonPrefixes.map(prefix => prefix.Prefix.split('/')[4]);
+          setSubjects(subjectNames);
+        } catch (error) {
+          console.error('Error fetching subjects from S3', error);
+        }
+      }
+
+      fetchSubjects();
+    }
+  }, [selectedUniversity, selectedBranch, selectedSemester]);
+
+  const fetchHtmlFiles = async () => {
+    try {
+      const params = {
+        Bucket: 'demonext',
+        Prefix: `universities/${selectedUniversity}/${selectedBranch}/${selectedSemester}/${selectedSubject}/`,
+      };
+      const data = await s3.listObjectsV2(params).promise();
+      const htmlFiles = data.Contents
+        .filter(obj => obj.Key.endsWith('.html'))
+        .map(obj => obj.Key.split('/').pop());
+      setHtmlFileList(htmlFiles);
     } catch (error) {
-      console.error('Error fetching HTML:', error);
+      console.error('Error fetching HTML files from S3', error);
     }
   };
 
-  const handleViewQuestionPapers = () => {
-    if (university && semester && branch && subject) {
-      setShowPaperList(true);
-      setSelectedPaper('');
-      setHtmlContent('');
-      setSelectedList(lists[university][semester][branch][subject]);
-    }
+  const handleHtmlFileClick = (htmlFile) => {
+    // Use router.push to navigate to the render page with query parameters
+    router.push({
+      pathname: '/renderpage',
+      query: {
+        fileName: htmlFile,
+        university: selectedUniversity,
+        branch: selectedBranch,
+        semester: selectedSemester,
+        subject: selectedSubject,
+      }});
   };
 
   return (
@@ -110,6 +157,7 @@ const LatexPage = () => {
         <p className='text-2xl text-center'>Get Your Previous University Papers</p>
         <br/>
         <br/>
+        <div className=''>
         <div className='select-tag-1'>
           <select
             className='select-box'
@@ -123,95 +171,93 @@ const LatexPage = () => {
             <option value="">Select Stream</option>
             <option value="B.E/B.Tech">B.E/B.Tech</option>
           </select>
-          <select
-            className='select-box'
-            value={university || ''}
-            onChange={(e) => router.push(`/?university=${e.target.value}`)}
-          >
-            <option value="">Select University</option>
-            {universities.map((uni) => (
-              <option key={uni} value={uni}>
-                {uni}
-              </option>
-            ))}
-          </select>
+          <select className='select-box'
+        value={selectedUniversity}
+        onChange={e => setSelectedUniversity(e.target.value)}
+      >
+        <option value="">Select University</option>
+        {universities.map(university => (
+          <option key={university} value={university}>
+            {university}
+          </option>
+        ))}
+      </select>
         </div>
         <br/>
 
         <div className='select-tag-1'>
-          <select
-            className='select-box'
-            value={branch || ''}
-            onChange={(e) => router.push(`/?university=${university}&branch=${e.target.value}`)}
-          >
-            <option value="">Select Branch</option>
-            {branches[university] &&
-              branches[university].map((bra) => (
-                <option key={bra} value={bra}>
-                  {bra}
-                </option>
-              ))}
-          </select>
-          <select
-            className='select-box'
-            value={semester || ''}
-            onChange={(e) => router.push(`/?university=${university}&branch=${branch}&semester=${e.target.value}`)}
-          >
-            <option value="">Select Semester</option>
-            {semesters[university] &&
-              semesters[university].map((sem) => (
-                <option key={sem} value={sem}>
-                  {sem}
-                </option>
-              ))}
-          </select>
-          <select
-            className='select-box'
-            value={subject || ''}
-            onChange={(e) =>
-              router.push(`/?university=${university}&branch=${branch}&semester=${semester}&subject=${e.target.value}`)
-            }
-          >
-            <option value="">Select Subject</option>
-            {subjects[university]?.[semester]?.[branch] &&
-              subjects[university][semester][branch].map((subj) => (
-                <option key={subj} value={subj}>
-                  {subj}
-                </option>
-              ))}
-          </select>
+        <select className='select-box'
+        value={selectedBranch}
+        onChange={e => setSelectedBranch(e.target.value)}
+      >
+        <option value="">Select Branch</option>
+        {branches.map(branch => (
+          <option key={branch} value={branch}>
+            {branch}
+          </option>
+        ))}
+      </select>
+      <select className='select-box'
+        value={selectedSemester}
+        onChange={e => setSelectedSemester(e.target.value)}
+      >
+        <option value="">Select Semester</option>
+        {semesters.map(semester => (
+          <option key={semester} value={semester}>
+            {semester}
+          </option>
+        ))}
+      </select>
+      <select className='select-box'
+        value={selectedSubject}
+        onChange={e => setSelectedSubject(e.target.value)}
+      >
+        <option value="">Select Subject</option>
+        {subjects.map(subject => (
+          <option key={subject} value={subject}>
+            {subject}
+          </option>
+        ))}
+      </select>
         </div>
+        </div>
+   
         <br/>
         <br/>
         <div className='button-container'>
-          <button className='view-button' onClick={handleViewQuestionPapers}>
+          <button className='view-button' onClick={fetchHtmlFiles}>
             Find Papers solution
           </button>
         </div>
         <button>
         </button>
         <br/>
-        {showPaperList && (
+        {htmlFileList.length > 0 && (
   <div className='paper-list'>
-    <ul className='a'>
-      {selectedList.map((li) => (
+    <ul>
+      {htmlFileList.map((htmlFile, index) => (
         <li
-          key={li}
+          key={index}
           onClick={() => {
-            setSelectedPaper(li);
-            // Construct the URL with query parameters
-            const url = `/renderpage?fileName=${li}&university=${university}&semester=${semester}&branch=${branch}&subject=${subject}`;
+            const url = `/renderpage?fileName=${htmlFile}&university=${selectedUniversity}&semester=${selectedSemester}&branch=${selectedBranch}&subject=${selectedSubject}`;
             // Open the URL in a new tab
             window.open(url, '_blank');
           }}
           style={{ cursor: 'pointer' }}
         >
-          {li}
+          {/* <Link
+            href={`/renderpage?fileName=${htmlFile}&university=${selectedUniversity}&semester=${selectedSemester}&branch=${selectedBranch}&subject=${selectedSubject}`}
+          >
+            <a>
+              {htmlFile.replace('.html', '')}
+            </a>
+          </Link> */}
         </li>
       ))}
     </ul>
   </div>
 )}
+
         <br/>
         <br/>
         <br/>
