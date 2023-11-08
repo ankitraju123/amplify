@@ -16,7 +16,7 @@ const s3 = new AWS.S3();
 
 const LatexPage = () => {
   <Head>
-    <meta name="google-site-verification" content="FxqR1s2icYY6kU-AX-P380Ww8gSBV3XDqfTmpumkPAI" />
+   <meta name="google-site-verification" content="FxqR1s2icYY6kU-AX-P380Ww8gSBV3XDqfTmpumkPAI" />
   </Head>
   const [selectedUniversity, setSelectedUniversity] = useState('');
   const [selectedBranch, setSelectedBranch] = useState('');
